@@ -134,17 +134,20 @@ module RedmineInternalDemo
       def run(output: $stdout, language: default_language)
         ensure_default_data!(language)
 
-        admin = User.where(admin: true).first || raise('No admin user found in Redmine')
-        roles = default_roles
-        users = ensure_users!
-        project = ensure_project!
-        ensure_memberships!(project, users, roles)
-        versions = ensure_versions!(project)
-        categories = ensure_categories!(project)
-        issues = ensure_issues!(project, admin, users, versions, categories)
-        ensure_relations!(issues)
+        Mailer.with_deliveries(false) do
+          admin = User.where(admin: true).first || raise('No admin user found in Redmine')
+          roles = default_roles
+          users = ensure_users!
+          project = ensure_project!
+          ensure_memberships!(project, users, roles)
+          versions = ensure_versions!(project)
+          categories = ensure_categories!(project)
+          remove_demo_relations!(project)
+          issues = ensure_issues!(project, admin, users, versions, categories)
+          ensure_relations!(issues)
 
-        output.puts "Seeded project=#{project.identifier} issues=#{issues.size} versions=#{versions.size} users=#{users.size}"
+          output.puts "Seeded project=#{project.identifier} issues=#{issues.size} versions=#{versions.size} users=#{users.size}"
+        end
       end
 
       private
@@ -259,6 +262,23 @@ module RedmineInternalDemo
           )
           relation.delay = delay
           relation.save!
+        end
+      end
+
+      def remove_demo_relations!(project)
+        subjects = ISSUE_BLUEPRINTS.pluck(:subject)
+        issues_by_subject = project.issues.where(subject: subjects).index_by(&:subject)
+
+        RELATIONS.each do |from_subject, to_subject, relation_type, _delay|
+          issue_from = issues_by_subject[from_subject]
+          issue_to = issues_by_subject[to_subject]
+          next unless issue_from && issue_to
+
+          IssueRelation.where(
+            issue_from: issue_from,
+            issue_to: issue_to,
+            relation_type: relation_type
+          ).delete_all
         end
       end
 
