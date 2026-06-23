@@ -1,0 +1,1 @@
+get 'internal-demo', to: 'internal_demo#index'

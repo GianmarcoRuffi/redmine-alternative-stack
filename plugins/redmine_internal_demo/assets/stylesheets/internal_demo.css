@@ -1,0 +1,134 @@
+.internal-demo {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.internal-demo .hero,
+.internal-demo .panel {
+  background: #ffffff;
+  border: 1px solid #d8dee7;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.internal-demo .eyebrow {
+  margin: 0 0 0.35rem;
+  color: #005a8d;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.internal-demo .hero h2 {
+  margin: 0;
+  color: #16324f;
+}
+
+.internal-demo .summary {
+  max-width: 70ch;
+  margin: 0.75rem 0 0;
+  color: #3a4a5b;
+}
+
+.internal-demo .panel-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.internal-demo h3 {
+  margin-top: 0;
+  color: #16324f;
+}
+
+.internal-demo ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.internal-demo li + li {
+  margin-top: 0.5rem;
+}
+
+.internal-demo .comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.internal-demo .comparison-table th,
+.internal-demo .comparison-table td {
+  border-bottom: 1px solid #e5ebf2;
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.internal-demo .comparison-table th {
+  background: #f4f8fb;
+  color: #16324f;
+}
+
+.internal-demo .actions .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.internal-demo .seed-status pre {
+  margin: 0.75rem 0 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  border-radius: 10px;
+  background: #122033;
+  color: #f4f8fb;
+}
+
+.internal-demo .seed-status .stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.9rem;
+  color: #16324f;
+}
+
+.internal-demo .seed-status .links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.internal-demo .seed-status .links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background: #eaf3f9;
+  color: #005a8d;
+  text-decoration: none;
+}
+
+.internal-demo .seed-status .links a:hover {
+  background: #d8e9f4;
+}
+
+.internal-demo .actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background: #005a8d;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.internal-demo .actions a:hover {
+  background: #003f63;
+}

@@ -1,0 +1,91 @@
+<% html_title 'Redmine Demo' %>
+
+<div class="internal-demo">
+  <section class="hero">
+    <p class="eyebrow">Internal Demo</p>
+    <h2>Redmine come possibile alternativa a Jira</h2>
+    <p class="summary">
+      Questa pagina riassume la direzione della demo interna: mostrare un Redmine
+      potenziato, non una semplice installazione base.
+    </p>
+  </section>
+
+  <section class="panel-grid">
+    <% @demo_sections.each do |section| %>
+      <article class="panel">
+        <h3><%= section[:title] %></h3>
+        <ul>
+          <% section[:items].each do |item| %>
+            <li><%= item %></li>
+          <% end %>
+        </ul>
+      </article>
+    <% end %>
+  </section>
+
+  <section class="panel seed-status">
+    <% if @demo_project %>
+      <h3>Progetto dimostrativo disponibile</h3>
+      <p>
+        La sandbox include il progetto pubblico <strong><%= @demo_project.name %></strong>
+        pronto per la demo interna.
+      </p>
+      <div class="stats">
+        <span><strong><%= @demo_stats[:issues] %></strong> issue</span>
+        <span><strong><%= @demo_stats[:versions] %></strong> versioni</span>
+        <span><strong><%= @demo_stats[:members] %></strong> membri</span>
+      </div>
+      <div class="links">
+        <a href="/projects/<%= @demo_project.identifier %>">Apri Progetto Demo</a>
+        <a href="/projects/<%= @demo_project.identifier %>/issues">Apri Backlog Demo</a>
+        <a href="/projects/<%= @demo_project.identifier %>/roadmap">Apri Roadmap Demo</a>
+      </div>
+    <% else %>
+      <h3>Seed dati demo non ancora eseguito</h3>
+      <p>
+        Per popolare la sandbox con progetto, versioni e issue dimostrative esegui:
+      </p>
+      <pre>docker compose exec redmine sh -lc 'SECRET_KEY_BASE="$REDMINE_SECRET_KEY_BASE" bundle exec rake redmine_internal_demo:seed'</pre>
+    <% end %>
+  </section>
+
+  <section class="panel">
+    <h3>Matrice rapida Jira vs Redmine</h3>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Area</th>
+          <th>Jira oggi</th>
+          <th>Direzione demo Redmine</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @comparison_rows.each do |row| %>
+          <tr>
+            <% row.each do |cell| %>
+              <td><%= cell %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel actions">
+    <h3>Percorso consigliato per la demo</h3>
+    <p>
+      La demo ora puo mostrare un primo flusso reale: progetto pubblico, versioni,
+      issue lifecycle e reporting minimo. Il passo successivo e rafforzare backlog
+      e board con i plugin giusti.
+    </p>
+    <div class="links">
+      <a href="/projects">Apri Progetti</a>
+      <a href="/issues">Apri Issue</a>
+      <a href="/activity">Apri Attivita</a>
+    </div>
+  </section>
+</div>
+
+<% content_for :header_tags do %>
+  <%= stylesheet_link_tag 'internal_demo', plugin: 'redmine_internal_demo' %>
+<% end %>
