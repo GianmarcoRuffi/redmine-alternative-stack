@@ -17,7 +17,7 @@ Obiettivo iniziale:
 
 ## Direzione del progetto
 
-La linea di lavoro corrente e questa:
+Linea di lavoro corrente:
 
 - non proporre Redmine base come sostituto diretto di Jira
 - costruire uno stack Redmine potenziato e curato
