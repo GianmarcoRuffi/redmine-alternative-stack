@@ -9,12 +9,9 @@ Obiettivo iniziale:
 
 ## Struttura
 
-- `docs/redmine-alternative-plan.md`: roadmap a 12 mesi, verifiche, decisioni e rischi
-- `docs/sandbox-setup.md`: guida locale per la prima sandbox Redmine
-- `research/jira-redmine-gap-matrix.md`: gap matrix e lettura strategica Jira vs Redmine
-- `decisions/product-thesis.md`: tesi di prodotto, non-goal e principio di posizionamento
-- `plugins/redmine_internal_demo`: primo plugin demo Redmine in Ruby on Rails
 
+- `docs/free-plugin-matrix.md`: matrice di plugin liberi testati + gap coverage
+- `docs/workaround-templates-checklists.md`: guide pratiche per workaround template e checklist
 ## Direzione del progetto
 
 Linea di lavoro corrente:

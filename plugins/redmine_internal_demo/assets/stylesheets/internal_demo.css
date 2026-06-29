@@ -132,3 +132,87 @@
 .internal-demo .actions a:hover {
   background: #003f63;
 }
+
+.internal-demo .panel-heading {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.internal-demo .panel-heading p {
+  max-width: 70ch;
+  margin: 0.35rem 0 0;
+  color: #3a4a5b;
+}
+
+.internal-demo .stack-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  min-width: 220px;
+}
+
+.internal-demo .stack-summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid #d8dee7;
+  border-radius: 999px;
+  background: #f7fafc;
+  color: #16324f;
+}
+
+.internal-demo .plugin-table {
+  margin-top: 1rem;
+}
+
+.internal-demo .status-pill {
+  display: inline-flex;
+  align-items: center;
+  min-width: 104px;
+  justify-content: center;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.internal-demo .status-installato,
+.internal-demo .status-disponibile {
+  background: #e7f5ee;
+  color: #12633f;
+}
+
+.internal-demo .status-non-installato {
+  background: #fff4de;
+  color: #7a4a00;
+}
+
+.internal-demo .status-da-validare {
+  background: #eaf3f9;
+  color: #005a8d;
+}
+
+.internal-demo .status-deferito {
+  background: #f1edf8;
+  color: #56348a;
+}
+
+.internal-demo .stack-note {
+  margin: 0.9rem 0 0;
+  color: #3a4a5b;
+}
+
+@media (max-width: 720px) {
+  .internal-demo .panel-heading {
+    display: block;
+  }
+
+  .internal-demo .stack-summary {
+    justify-content: flex-start;
+    margin-top: 0.9rem;
+  }
+}

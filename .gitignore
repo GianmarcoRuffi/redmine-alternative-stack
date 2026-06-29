@@ -1,1 +1,8 @@
 .env
+
+# Third-party Redmine plugins/themes installed by scripts.
+# Keep internal plugins tracked explicitly.
+/plugins/*
+!/plugins/redmine_internal_demo/
+!/plugins/redmine_internal_demo/**
+/themes/*

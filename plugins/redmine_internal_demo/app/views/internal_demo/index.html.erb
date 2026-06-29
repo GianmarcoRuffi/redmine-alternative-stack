@@ -71,6 +71,54 @@
     </table>
   </section>
 
+  <section class="panel plugin-stack">
+    <div class="panel-heading">
+      <div>
+        <h3>Stack plugin gratuito</h3>
+        <p>
+          Prima ondata orientata ad adozione interna: template, tagging,
+          wiki, automazioni ricorrenti, miglioramenti UX e temi. Board/backlog
+          resta uno spike separato.
+        </p>
+      </div>
+      <div class="stack-summary">
+        <span><strong><%= @stack_summary[:installed] %></strong> pronti</span>
+        <span><strong><%= @stack_summary[:pending] %></strong> mancanti</span>
+        <span><strong><%= @stack_summary[:deferred] %></strong> spike</span>
+      </div>
+    </div>
+
+    <table class="comparison-table plugin-table">
+      <thead>
+        <tr>
+          <th>Componente</th>
+          <th>Tipo</th>
+          <th>Gap coperto</th>
+          <th>Stato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @stack_components.each do |component| %>
+          <tr>
+            <td><%= component[:name] %></td>
+            <td><%= component[:type] %></td>
+            <td><%= component[:gap] %></td>
+            <td>
+              <span class="status-pill status-<%= component[:status].parameterize %>">
+                <%= component[:status] %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <p class="stack-note">
+      Installa o aggiorna la prima ondata con <code>scripts/install-free-plugins.sh</code>,
+      poi esegui migrazioni e restart del container Redmine.
+    </p>
+  </section>
+
   <section class="panel actions">
     <h3>Percorso consigliato per la demo</h3>
     <p>

@@ -145,8 +145,92 @@ module RedmineInternalDemo
           remove_demo_relations!(project)
           issues = ensure_issues!(project, admin, users, versions, categories)
           ensure_relations!(issues)
+          ensure_template_wiki!(project, admin)
+          ensure_checklist_example!(project, admin, users, versions, categories)
 
           output.puts "Seeded project=#{project.identifier} issues=#{issues.size} versions=#{versions.size} users=#{users.size}"
+        end
+      end
+
+      def ensure_template_wiki!(project, admin)
+        begin
+          return unless project.wiki || (project.module_enabled?(:wiki) rescue false)
+
+          wiki = project.wiki || Wiki.create!(project: project, start_page: 'IssueTemplates')
+
+          template_text = <<~TEMPLATE
+            h1. Issue Templates
+
+            h2. Bug Report
+
+            *Use this template when reporting a defect.*
+
+            **Severity**: [Select: Critical | High | Medium | Low]
+            **Component**: [Select from custom field options]
+            **Environment**: [OS, Browser, Redmine version]
+
+            h3. Description
+            [Describe the bug clearly]
+
+            h3. Steps to Reproduce
+            # First step
+            # Second step
+
+            h3. Expected Result
+            [What should happen]
+
+            h3. Actual Result
+            [What actually happens]
+          TEMPLATE
+
+          page = WikiPage.find_or_initialize_by(wiki: wiki, title: 'IssueTemplates')
+          if page.new_record?
+            page.save!
+          end
+
+          if page.content.nil? || page.content.text.blank?
+            WikiContent.create!(page: page, text: template_text, author: admin)
+          end
+        rescue StandardError => e
+          $stdout.puts "Warning: could not create demo wiki template: #{e.message}"
+        end
+      end
+
+      def ensure_checklist_example!(project, admin, users, versions, categories)
+        begin
+          parent_subject = 'Release Checklist: Sample'
+          parent = Issue.find_or_initialize_by(project: project, subject: parent_subject)
+          parent.author = admin
+          parent.tracker = Tracker.order(:position).first
+          parent.status = IssueStatus.order(:position).first
+          parent.priority = Enumeration.where(type: 'IssuePriority').order(:position).first
+          parent.start_date = Date.today
+          parent.due_date = Date.today + 7
+          parent.description = 'Template parent issue used to demonstrate checklist via child issues.'
+          parent.save!
+
+          checklist_items = [
+            'Design release notes',
+            'Bump version and tag',
+            'Run full regression tests',
+            'Publish release artefacts'
+          ]
+
+          checklist_items.each do |item_subject|
+            child = Issue.find_or_initialize_by(project: project, subject: item_subject)
+            child.author = admin
+            child.tracker = Tracker.order(:position).first
+            child.status = IssueStatus.find_by(name: 'New') || IssueStatus.order(:position).first
+            child.priority = Enumeration.where(type: 'IssuePriority').order(:position).first
+            child.assigned_to = users.values.first rescue nil
+            # Ensure parent-child link by setting `parent_id` before saving
+            child.parent_id = parent.id
+            child.save!
+
+            # Parent-child link is sufficient for the checklist demo; no extra IssueRelation is needed.
+          end
+        rescue StandardError => e
+          $stdout.puts "Warning: could not create checklist demo: #{e.message}"
         end
       end
 
